@@ -1,0 +1,79 @@
+plugins {
+    id 'androidx.navigation.safeargs.kotlin' version '2.1.0' apply false
+    id 'org.jetbrains.kotlin.android' version '1.3.72' apply false
+    id 'com.android.application' version '3.6.2' apply false
+    id 'xyz.tynn.idea.fix' version '0.1.2'
+    id "com.github.plnice.canidropjetifier" version "0.5"
+}
+
+subprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+        jcenter()
+    }
+
+    tasks.withType(Test) {
+        testLogging {
+            events "failed"
+            exceptionFormat "full"
+            showExceptions true
+            showStackTraces true
+            showCauses true
+        }
+    }
+
+    plugins.withId('kotlin') {
+        compileKotlin {
+            kotlinOptions {
+                jvmTarget = '1.8'
+            }
+        }
+
+        compileTestKotlin {
+            kotlinOptions {
+                jvmTarget = '1.8'
+            }
+        }
+    }
+
+    plugins.withType(com.android.build.gradle.BasePlugin) {
+        project.apply {
+            plugin 'kotlin-android'
+        }
+
+        android {
+            compileSdkVersion 29
+
+            defaultConfig {
+                minSdkVersion 21
+                targetSdkVersion 29
+
+                testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+            }
+
+            compileOptions {
+                sourceCompatibility '1.8'
+                targetCompatibility '1.8'
+            }
+
+            kotlinOptions {
+                jvmTarget = '1.8'
+            }
+        }
+
+        configurations.all {
+            exclude group: 'com.android.support'
+        }
+    }
+}
+
+wrapper {
+    gradleVersion '6.3'
+    distributionType Wrapper.DistributionType.ALL
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

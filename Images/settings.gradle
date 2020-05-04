@@ -1,0 +1,19 @@
+pluginManagement {
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.namespace == 'com.android')
+                useModule "com.android.tools.build:gradle:$requested.version"
+            if (requested.id.namespace == 'androidx.navigation.safeargs')
+                useModule "androidx.navigation:navigation-safe-args-gradle-plugin:$requested.version"
+        }
+    }
+
+    repositories {
+        gradlePluginPortal()
+        google()
+    }
+}
+
+include ':app'
+include ':core'
+include ':repo'

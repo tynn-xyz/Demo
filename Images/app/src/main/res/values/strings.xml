@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Images Demo</string>
+
+    <string name="description_detail_image">Detail image</string>
+    <string name="description_thumbnail_image">Thumbnail image</string>
+
+    <string name="label_loading_retry">Retry</string>
+    <string name="label_menu_web">Open web page</string>
+    <string name="label_screen_detail">Detail</string>
+    <string name="label_screen_list">List</string>
+
+    <string name="message_loading_error">Could not load the images</string>
+</resources>
