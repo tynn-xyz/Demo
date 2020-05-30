@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.squareup.picasso.Picasso
 import demo.img.R
+import demo.img.color.PaletteTarget.Companion.into
 import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.fragment_detail.view.*
 import org.koin.android.ext.android.inject
@@ -31,10 +32,11 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         view: View,
         savedInstanceState: Bundle?
     ) = with(image) {
-        view.detail_image_caption.text = author
+        val caption = view.detail_image_caption
+        caption.text = author
         picasso.load(detail)
-            .placeholder(R.color.colorPlaceholder)
-            .into(detail_image)
+            .placeholder(R.color.colorPrimaryLight)
+            .into(detail_image, caption)
     }
 
     override fun onDestroyView() {

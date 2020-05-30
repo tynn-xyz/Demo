@@ -68,10 +68,11 @@ internal class DetailFragmentTest {
     fun `onViewCreated should load image into photo view with placeholder`() {
         val photo = mockk<PhotoView>()
         every { fragment.detail_image } returns photo
+        every { view.detail_image_caption } returns mockk(relaxed = true)
 
         fragment.onViewCreated(view, null)
 
-        verify { picasso.load(image.detail).placeholder(R.color.colorPlaceholder).into(photo) }
+        verify { picasso.load(image.detail).placeholder(R.color.colorPrimaryLight).into(photo, any()) }
     }
 
     @Test

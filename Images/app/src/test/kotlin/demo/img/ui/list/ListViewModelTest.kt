@@ -1,17 +1,15 @@
 package demo.img.ui.list
 
-import android.util.Log
-import android.util.Log.w
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import demo.img.R
 import demo.img.core.ImagesProvider
 import demo.img.core.test.ImageData
 import demo.img.model.Image
-import demo.img.ui.list.ListState.*
 import demo.img.url.UriWrapper
-import io.mockk.*
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Unconfined
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -21,6 +19,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import kotlin.Result.Companion.failure
+import kotlin.Result.Companion.success
 
 internal class ListViewModelTest {
 
@@ -64,7 +64,7 @@ internal class ListViewModelTest {
         }
 
         viewModel.state.collect {
-            assertEquals(listOf(null, Data(images)), it)
+            assertEquals(listOf(null, success(images)), it)
         }
 
         coVerify { provider(1) }
@@ -72,17 +72,11 @@ internal class ListViewModelTest {
 
     @Test
     fun `images should post error`() {
-        val error = IllegalStateException()
-        coEvery { provider(any()) } throws error
+        val throwable = Throwable()
+        coEvery { provider(any()) } throws throwable
 
-        mockkStatic(Log::class) {
-            every { w(any(), any<Throwable>()) } returns 0
-
-            viewModel.state.collect {
-                assertEquals(listOf(null, Error<Any>(R.string.message_loading_error)), it)
-            }
-
-            verify { w("ListViewModel", error) }
+        viewModel.state.collect {
+            assertEquals(listOf(null, failure<List<Image>>(throwable)), it)
         }
 
         coVerify { provider(1) }

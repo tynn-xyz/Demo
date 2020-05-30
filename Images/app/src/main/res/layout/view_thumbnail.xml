@@ -1,5 +1,6 @@
 <demo.img.view.SquareFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:foreground="?selectableItemBackground">
@@ -17,5 +18,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:padding="4dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+        tools:text="Author" />
 </demo.img.view.SquareFrameLayout>

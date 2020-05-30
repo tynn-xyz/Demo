@@ -4,19 +4,16 @@ import android.content.Context
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.navigation.NavController
-import androidx.navigation.NavDirections
-import androidx.navigation.Navigation
-import androidx.navigation.Navigation.setViewNavController
-import androidx.navigation.findNavController
 import com.squareup.picasso.Picasso
 import demo.img.R
-import io.mockk.*
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.verify
 import kotlinx.android.synthetic.main.view_thumbnail.view.*
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -64,7 +61,7 @@ internal class ListAdapterTest {
 
         adapter.onBindViewHolder(holder, 0)
 
-        verify { picasso.load(uri).placeholder(R.color.colorPlaceholder).into(image) }
+        verify { picasso.load(uri).placeholder(R.color.colorPrimaryLight).into(image, any()) }
     }
 
     @Test

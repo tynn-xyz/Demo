@@ -6,6 +6,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.ListAdapter
 import com.squareup.picasso.Picasso
 import demo.img.R
+import demo.img.color.PaletteTarget.Companion.into
 import demo.img.model.Image
 import demo.img.ui.list.ListFragmentDirections.Companion.showDetailScreen
 import kotlinx.android.synthetic.main.view_thumbnail.*
@@ -39,9 +40,10 @@ internal class ListAdapter(
         holder: ListViewHolder,
         position: Int
     ) = with(getItem(position)) {
-        holder.list_item_caption.text = author
+        val caption = holder.list_item_caption
+        caption.text = author
         picasso.load(thumbnail)
-            .placeholder(R.color.colorPlaceholder)
-            .into(holder.list_item_thumbnail)
+            .placeholder(R.color.colorPrimaryLight)
+            .into(holder.list_item_thumbnail, caption)
     }
 }

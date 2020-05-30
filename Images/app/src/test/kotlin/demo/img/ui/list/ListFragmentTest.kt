@@ -1,5 +1,7 @@
 package demo.img.ui.list
 
+import android.util.Log
+import android.util.Log.w
 import android.view.View
 import android.view.View.OnClickListener
 import androidx.lifecycle.LifecycleOwner
@@ -14,8 +16,6 @@ import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
 import com.google.android.material.snackbar.Snackbar.make
 import demo.img.R
 import demo.img.model.Image
-import demo.img.ui.list.ListState.Data
-import demo.img.ui.list.ListState.Error
 import io.mockk.*
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import org.junit.After
@@ -27,6 +27,8 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.dsl.module
 import org.robolectric.RobolectricTestRunner
+import kotlin.Result.Companion.failure
+import kotlin.Result.Companion.success
 
 @RunWith(RobolectricTestRunner::class)
 internal class ListFragmentTest {
@@ -84,18 +86,18 @@ internal class ListFragmentTest {
 
         fragment.onViewCreated(view, null)
 
-        val observer = slot<Observer<ListState<List<Image>>?>>()
+        val observer = slot<Observer<Result<List<Image>>?>>()
         verify { viewModel.state.observe(owner, capture(observer)) }
 
         val list = mockk<List<Image>>()
-        observer.captured.onChanged(Data(list))
+        observer.captured.onChanged(success(list))
 
         verify { refresh.isRefreshing = false }
         verify { adapter.submitList(list) }
     }
 
     @Test
-    fun `onViewCreated should observe state error`() = mockkStatic(Snackbar::class) {
+    fun `onViewCreated should observe state error`() = mockkStatic(Log::class, Snackbar::class) {
         val refresh = mockk<SwipeRefreshLayout>(relaxed = true)
         every { view.list_refresh } returns refresh
         val snackbar = mockk<Snackbar> {
@@ -103,19 +105,21 @@ internal class ListFragmentTest {
             every { show() } just runs
         }
         every { make(any(), any<Int>(), any()) } returns snackbar
+        every { w(any(), any<Throwable>()) } returns 0
 
         fragment.onViewCreated(view, null)
 
-        val observer = slot<Observer<ListState<List<Image>>?>>()
+        val observer = slot<Observer<Result<List<Image>>?>>()
         verify { viewModel.state.observe(owner, capture(observer)) }
 
-        val string = R.string.message_loading_error
-        observer.captured.onChanged(Error(string))
+        val throwable = Throwable()
+        observer.captured.onChanged(failure(throwable))
+        verify { w("ListFragment", throwable) }
 
         val listener = slot<OnClickListener>()
         verify { refresh.isRefreshing = false }
         verify {
-            make(refresh, string, LENGTH_LONG)
+            make(refresh, R.string.message_loading_error, LENGTH_LONG)
             snackbar.setAction(R.string.label_loading_retry, capture(listener))
             snackbar.show()
         }
@@ -136,7 +140,7 @@ internal class ListFragmentTest {
 
         fragment.onViewCreated(view, null)
 
-        val observer = slot<Observer<ListState<List<Image>>?>>()
+        val observer = slot<Observer<Result<List<Image>>?>>()
         verify { viewModel.state.observe(owner, capture(observer)) }
 
         observer.captured.onChanged(null)
