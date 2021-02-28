@@ -1,0 +1,35 @@
+name: demo_flutter
+description: A Frankfurter Flutter demo application.
+
+publish_to: 'none'
+
+version: 0.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
+
+  http: ^0.13.0
+  provider: ^4.0.0
+  collection: ^1.15.0
+  webview_flutter: ^2.0.0
+  stream_transform: ^2.0.0
+  shared_preferences: ^2.0.1
+  flutter_stream_notifiers: ^0.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mockito: ^5.0.0
+
+flutter:
+  generate: true
+  uses-material-design: true

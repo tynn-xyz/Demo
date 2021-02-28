@@ -1,0 +1,14 @@
+{
+  "appTitle": "Flutter Demo",
+  "@appTitle": {
+    "description": "The application title to display with the toolbar"
+  },
+  "apiTitle": "API Reference",
+  "@apiTitle": {
+    "description": "The title for the API reference page"
+  },
+  "ratesTitle": "Current Rates",
+  "@ratesTitle": {
+    "description": "The title for the rates page"
+  }
+}
