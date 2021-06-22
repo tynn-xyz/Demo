@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Timer</string>
+
+    <string name="description_pause">Pause timer</string>
+    <string name="description_start">Start timer</string>
+    <string name="description_stop">Stop timer</string>
+
+    <string name="format_seconds">%1$ds</string>
+    <string name="format_minutes">%2$dm %1$ds</string>
+    <string name="format_hours">%3$dh %2$dm %1$ds</string>
+    <string name="format_days">%4$dd %3$dh %2$dm %1$ds</string>
+</resources>

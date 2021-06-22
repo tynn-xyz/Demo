@@ -1,0 +1,51 @@
+plugins {
+    id 'com.android.application' version '4.2.1' apply false
+    id 'dagger.hilt.android.plugin' version '2.37' apply false
+    id 'org.jetbrains.kotlin.android' version '1.5.10' apply false
+    id 'com.github.ben-manes.versions' version '0.39.0'
+    id 'xyz.tynn.idea.fix' version '0.1.2'
+}
+
+subprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    pluginManager.withPlugin('com.android.application') {
+        apply from: "$rootDir/android.gradle"
+    }
+
+    pluginManager.withPlugin('com.android.library') {
+        apply from: "$rootDir/android.gradle"
+    }
+
+    pluginManager.withPlugin('org.jetbrains.kotlin.android') {
+        apply from: "$rootDir/kotlin.gradle"
+    }
+
+    pluginManager.withPlugin('org.jetbrains.kotlin.jvm') {
+        apply from: "$rootDir/kotlin.gradle"
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+dependencyUpdates {
+    def isNonStable = { version ->
+        ['alpha', 'beta', 'dev', 'rc', 'cr', 'm', 'preview', 'b', 'ea', 'eap'].any {
+            version ==~ /(?i).*[.-]${it}[.\d-+]*.*/
+        }
+    }
+    rejectVersionIf {
+        isNonStable(it.candidate.version) && !isNonStable(it.currentVersion)
+    }
+    gradleReleaseChannel = 'current'
+}
+
+wrapper {
+    gradleVersion '7.1'
+    distributionType Wrapper.DistributionType.ALL
+}
