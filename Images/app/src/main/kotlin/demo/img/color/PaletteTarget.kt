@@ -9,13 +9,13 @@ import androidx.palette.graphics.Palette
 import androidx.palette.graphics.Palette.from
 import com.squareup.picasso.Callback
 import com.squareup.picasso.RequestCreator
-import demo.img.R
+import demo.img.R.id.palette_target
 import java.lang.ref.WeakReference
 import java.util.*
 
 internal class PaletteTarget private constructor(
     imageView: ImageView,
-    textView: TextView
+    textView: TextView,
 ) {
 
     private val imageView = WeakReference(imageView)
@@ -49,15 +49,15 @@ internal class PaletteTarget private constructor(
         private val cache = WeakHashMap<Bitmap, Palette>()
 
         private fun TextView.getTarget(imageView: ImageView) =
-            (getTag(R.id.palette_target) as? PaletteTarget)?.takeIf {
+            (getTag(palette_target) as? PaletteTarget)?.takeIf {
                 it.imageView.get() == imageView
             } ?: PaletteTarget(imageView, this).also {
-                setTag(R.id.palette_target, it)
+                setTag(palette_target, it)
             }
 
         fun RequestCreator.into(
             imageView: ImageView,
-            textView: TextView
+            textView: TextView,
         ) = with(textView.getTarget(imageView)) {
             into(imageView, callback)
         }

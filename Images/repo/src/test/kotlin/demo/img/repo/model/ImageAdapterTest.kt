@@ -17,21 +17,21 @@ internal class ImageAdapterTest {
             1,
             2,
             "url",
-            "download"
+            "download",
         )
 
         assertEquals(
             LoremImage(
                 dto.author,
                 StringUrl(
-                    dto.download_url
+                    dto.download_url,
                 ),
                 StringUrl(
-                    dto.download_url
+                    dto.download_url,
                 ),
                 StringUrl(
-                    dto.url
-                )
+                    dto.url,
+                ),
             ),
             with(adapter) {
                 dto.toData()

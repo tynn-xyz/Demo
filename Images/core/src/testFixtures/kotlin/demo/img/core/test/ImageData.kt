@@ -7,5 +7,5 @@ data class ImageData<U : Url>(
     override val author: String,
     override val web: U,
     override val detail: U,
-    override val thumbnail: U
+    override val thumbnail: U,
 ) : ImageData

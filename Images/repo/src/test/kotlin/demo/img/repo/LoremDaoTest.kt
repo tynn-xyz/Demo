@@ -14,13 +14,13 @@ internal class LoremDaoTest {
             "1",
             mockk(),
             mockk(),
-            mockk()
+            mockk(),
         ),
         LoremImage(
             "2",
             mockk(),
             mockk(),
-            mockk()
+            mockk(),
         )
     )
 

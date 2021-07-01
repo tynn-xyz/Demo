@@ -71,6 +71,6 @@ internal class ListItemCallbackTest {
         "author$detail",
         parse("https://example.com/thumbnail/$thumbnail"),
         parse("https://example.com/detail/$detail"),
-        parse("https://example.com/web/$detail")
+        parse("https://example.com/web/$detail"),
     )
 }

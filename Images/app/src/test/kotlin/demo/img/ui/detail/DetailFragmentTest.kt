@@ -1,20 +1,22 @@
 package demo.img.ui.detail
 
+import android.R.id.home
 import android.content.Intent
 import android.content.Intent.ACTION_VIEW
 import android.net.Uri.parse
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.navigation.NavController
 import com.github.chrisbanes.photoview.PhotoView
 import com.squareup.picasso.Picasso
 import demo.img.R
+import demo.img.R.color.colorPrimaryLight
+import demo.img.R.id.*
 import demo.img.model.Image
 import io.mockk.*
-import kotlinx.android.synthetic.main.fragment_detail.*
-import kotlinx.android.synthetic.main.fragment_detail.view.*
 import org.junit.After
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -35,23 +37,38 @@ internal class DetailFragmentTest {
         "author",
         parse("https://example.com/thumbnail"),
         parse("https://example.com/detail"),
-        parse("https://example.com/web")
+        parse("https://example.com/web"),
     )
 
-    val nav = mockk<NavController>(relaxed = true)
+    val fragment by lazy { DetailFragment() }
 
-    val fragment = spyk<DetailFragment> {
-        arguments = DetailFragmentArgs(image).toBundle()
-        every { detail_image } returns mockk()
-    }
+    val caption = mockk<TextView>(relaxed = true)
+    val photo = mockk<PhotoView>()
 
-    val view = mockk<View> {
-        every { getTag(R.id.nav_controller_view_tag) } returns nav
-        every { detail_image_caption } returns mockk(relaxed = true)
+    val view = mockk<FrameLayout> {
+        every {
+            getTag(nav_controller_view_tag)
+        } returns mockk<NavController>(relaxed = true)
+        every {
+            findViewById<View>(detail_image_caption)
+        } returns caption
+        every {
+            findViewById<View>(detail_image)
+        } returns photo
     }
 
     @Before
     fun setup() {
+        mockkConstructor(DetailFragment::class)
+        every {
+            anyConstructed<DetailFragment>().arguments
+        } returns DetailFragmentArgs(image).toBundle()
+        every {
+            anyConstructed<DetailFragment>().view
+        } returns view
+        every {
+            anyConstructed<DetailFragment>().viewLifecycleOwner
+        } returns mockk(relaxed = true)
         startKoin {
             modules(module {
                 factory { picasso }
@@ -61,25 +78,19 @@ internal class DetailFragmentTest {
 
     @After
     fun teardown() {
+        unmockkAll()
         stopKoin()
     }
 
     @Test
     fun `onViewCreated should load image into photo view with placeholder`() {
-        val photo = mockk<PhotoView>()
-        every { fragment.detail_image } returns photo
-        every { view.detail_image_caption } returns mockk(relaxed = true)
-
         fragment.onViewCreated(view, null)
 
-        verify { picasso.load(image.detail).placeholder(R.color.colorPrimaryLight).into(photo, any()) }
+        verify { picasso.load(image.detail).placeholder(colorPrimaryLight).into(photo, any()) }
     }
 
     @Test
     fun `onViewCreated should set author as caption`() {
-        val caption = mockk<TextView>(relaxed = true)
-        every { view.detail_image_caption } returns caption
-
         fragment.onViewCreated(view, null)
 
         verify { caption.text = image.author }
@@ -87,9 +98,6 @@ internal class DetailFragmentTest {
 
     @Test
     fun `onDestroyView should cancel image loading`() {
-        val photo = mockk<PhotoView>()
-        every { fragment.detail_image } returns photo
-
         fragment.onDestroyView()
 
         verify { picasso.cancelRequest(photo) }
@@ -111,7 +119,7 @@ internal class DetailFragmentTest {
 
         assertTrue(
             fragment.onOptionsItemSelected(mockk {
-                every { itemId } returns R.id.menu_web
+                every { itemId } returns menu_web
             })
         )
 
@@ -127,7 +135,7 @@ internal class DetailFragmentTest {
     fun `onOptionsItemSelected should not handle random`() {
         assertFalse(
             fragment.onOptionsItemSelected(mockk {
-                every { itemId } returns android.R.id.home
+                every { itemId } returns home
             })
         )
     }

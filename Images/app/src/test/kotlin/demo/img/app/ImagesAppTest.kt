@@ -17,7 +17,10 @@ class ImagesAppTest : KoinTest {
 
     @Before
     fun setup() {
-        setProperty("javax.net.ssl.trustStoreType", "JKS")
+        setProperty(
+            "javax.net.ssl.trustStoreType",
+            "JKS",
+        )
     }
 
     @After

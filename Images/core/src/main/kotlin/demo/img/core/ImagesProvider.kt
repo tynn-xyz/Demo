@@ -6,6 +6,6 @@ package demo.img.core
 interface ImagesProvider {
 
     suspend operator fun invoke(
-        page: Int
+        page: Int,
     ): List<ImageData>
 }

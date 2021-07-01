@@ -12,5 +12,5 @@ internal data class ImageDto(
     val width: Int,
     val height: Int,
     val url: String,
-    val download_url: String
+    val download_url: String,
 )

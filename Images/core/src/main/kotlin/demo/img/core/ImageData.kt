@@ -12,6 +12,6 @@ interface ImageData {
     val thumbnail: Url
 
     override fun equals(
-        other: Any?
+        other: Any?,
     ): Boolean
 }

@@ -14,7 +14,7 @@ import retrofit2.Retrofit.Builder as RetrofitBuilder
 val repoModule = module {
 
     factory {
-        Cache(get(), 256 shl 20) // 256MB
+        Cache(get(), 256L shl 20) // 256MB
     }
 
     factory {

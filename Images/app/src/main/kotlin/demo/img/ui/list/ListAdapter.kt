@@ -1,49 +1,47 @@
 package demo.img.ui.list
 
-import android.view.LayoutInflater.from
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.ListAdapter
 import com.squareup.picasso.Picasso
-import demo.img.R
+import demo.img.R.color.colorPrimaryLight
 import demo.img.color.PaletteTarget.Companion.into
+import demo.img.databinding.ViewThumbnailBinding
 import demo.img.model.Image
-import demo.img.ui.list.ListFragmentDirections.Companion.showDetailScreen
-import kotlinx.android.synthetic.main.view_thumbnail.*
+import xyz.tynn.hoppa.binding.BindingViewHolder
+import xyz.tynn.hoppa.recycler.setOnClickListener
 
 internal class ListAdapter(
-    private val picasso: Picasso
-) : ListAdapter<Image, ListViewHolder>(
-    ListItemCallback
+    private val picasso: Picasso,
+) : ListAdapter<Image, BindingViewHolder<ViewThumbnailBinding>>(
+    ListItemCallback,
 ) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
-    ) = ListViewHolder(
-        from(parent.context).inflate(
-            R.layout.view_thumbnail,
-            parent,
-            false
-        )
-    ).apply {
-        itemView.setOnClickListener {
+        viewType: Int,
+    ) = BindingViewHolder(
+        parent,
+        ViewThumbnailBinding::inflate,
+    ) {
+        setOnClickListener {
             it.findNavController().navigate(
-                showDetailScreen(
-                    getItem(adapterPosition)
+                ListFragmentDirections.showDetailScreen(
+                    getItem(bindingAdapterPosition),
                 )
             )
         }
     }
 
     override fun onBindViewHolder(
-        holder: ListViewHolder,
-        position: Int
-    ) = with(getItem(position)) {
-        val caption = holder.list_item_caption
-        caption.text = author
-        picasso.load(thumbnail)
-            .placeholder(R.color.colorPrimaryLight)
-            .into(holder.list_item_thumbnail, caption)
+        holder: BindingViewHolder<ViewThumbnailBinding>,
+        position: Int,
+    ) = with(holder.binding) {
+        with(getItem(position)) {
+            listItemCaption.text = author
+            picasso.load(thumbnail)
+                .placeholder(colorPrimaryLight)
+                .into(listItemThumbnail, listItemCaption)
+        }
     }
 }

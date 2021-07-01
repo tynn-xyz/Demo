@@ -7,5 +7,5 @@ internal data class LoremImage(
     override val author: String,
     override val detail: Url,
     override val thumbnail: Url,
-    override val web: Url
+    override val web: Url,
 ) : ImageData

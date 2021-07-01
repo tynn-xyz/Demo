@@ -6,8 +6,8 @@ import demo.img.core.UrlParser
 internal class UriParser : UrlParser {
 
     override fun invoke(
-        url: String
+        url: String,
     ) = UriWrapper(
-        parse(url)
+        parse(url),
     )
 }

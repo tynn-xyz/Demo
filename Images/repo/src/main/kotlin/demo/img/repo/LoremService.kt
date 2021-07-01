@@ -8,6 +8,6 @@ internal interface LoremService {
     @GET("list")
     suspend fun getImages(
         @Query("page")
-        page: Int
+        page: Int,
     ): List<LoremImage>
 }

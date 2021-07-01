@@ -14,10 +14,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
 import com.google.android.material.snackbar.Snackbar.make
-import demo.img.R
+import demo.img.R.id.list_recycler
+import demo.img.R.id.list_refresh
+import demo.img.R.string.label_loading_retry
+import demo.img.R.string.message_loading_error
 import demo.img.model.Image
 import io.mockk.*
-import kotlinx.android.synthetic.main.fragment_list.view.*
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -37,17 +39,23 @@ internal class ListFragmentTest {
     val viewModel = mockk<ListViewModel>(relaxed = true)
 
     val owner = mockk<LifecycleOwner>()
-    val store = ViewModelStore()
 
     val fragment = spyk<ListFragment> {
         every { viewLifecycleOwner } returns owner
-        every { viewModelStore } returns store
+        every { viewModelStore } returns ViewModelStore()
     }
 
-    val view = mockk<View> {
-        every { list_recycler } returns mockk(relaxed = true)
-        every { list_refresh } returns mockk(relaxed = true)
+    val recycler = mockk<RecyclerView>(relaxed = true)
+    val refresh = mockk<SwipeRefreshLayout>(relaxed = true) {
+        every {
+            findViewById<View>(list_recycler)
+        } returns recycler
+        every {
+            findViewById<View>(list_refresh)
+        } returns this
     }
+
+    val view = refresh
 
     @Before
     fun setup() {
@@ -66,9 +74,6 @@ internal class ListFragmentTest {
 
     @Test
     fun `onViewCreated should setup grid with two columns`() {
-        val recycler = mockk<RecyclerView>(relaxed = true)
-        every { view.list_recycler } returns recycler
-
         fragment.onViewCreated(view, null)
 
         verify {
@@ -81,9 +86,6 @@ internal class ListFragmentTest {
 
     @Test
     fun `onViewCreated should observe state data`() {
-        val refresh = mockk<SwipeRefreshLayout>(relaxed = true)
-        every { view.list_refresh } returns refresh
-
         fragment.onViewCreated(view, null)
 
         val observer = slot<Observer<Result<List<Image>>?>>()
@@ -92,14 +94,12 @@ internal class ListFragmentTest {
         val list = mockk<List<Image>>()
         observer.captured.onChanged(success(list))
 
-        verify { refresh.isRefreshing = false }
+        verify { view.isRefreshing = false }
         verify { adapter.submitList(list) }
     }
 
     @Test
     fun `onViewCreated should observe state error`() = mockkStatic(Log::class, Snackbar::class) {
-        val refresh = mockk<SwipeRefreshLayout>(relaxed = true)
-        every { view.list_refresh } returns refresh
         val snackbar = mockk<Snackbar> {
             every { setAction(any<Int>(), any()) } returns this
             every { show() } just runs
@@ -117,10 +117,10 @@ internal class ListFragmentTest {
         verify { w("ListFragment", throwable) }
 
         val listener = slot<OnClickListener>()
-        verify { refresh.isRefreshing = false }
+        verify { view.isRefreshing = false }
         verify {
-            make(refresh, R.string.message_loading_error, LENGTH_LONG)
-            snackbar.setAction(R.string.label_loading_retry, capture(listener))
+            make(view, message_loading_error, LENGTH_LONG)
+            snackbar.setAction(label_loading_retry, capture(listener))
             snackbar.show()
         }
 
@@ -130,8 +130,6 @@ internal class ListFragmentTest {
 
     @Test
     fun `onViewCreated should observe state loading`() = mockkStatic(Snackbar::class) {
-        val refresh = mockk<SwipeRefreshLayout>(relaxed = true)
-        every { view.list_refresh } returns refresh
         val snackbar = mockk<Snackbar> {
             every { setAction(any<Int>(), any()) } returns this
             every { show() } just runs
@@ -144,18 +142,15 @@ internal class ListFragmentTest {
         verify { viewModel.state.observe(owner, capture(observer)) }
 
         observer.captured.onChanged(null)
-        verify { refresh.isRefreshing = true }
+        verify { view.isRefreshing = true }
     }
 
     @Test
     fun `onViewCreated should setup refresh delegate`() {
-        val refresh = mockk<SwipeRefreshLayout>(relaxed = true)
-        every { view.list_refresh } returns refresh
-
         fragment.onViewCreated(view, null)
 
         val listener = slot<OnRefreshListener>()
-        verify { refresh.setOnRefreshListener(capture(listener)) }
+        verify { view.setOnRefreshListener(capture(listener)) }
 
         listener.captured.onRefresh()
         verify { viewModel.refresh() }

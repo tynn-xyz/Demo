@@ -12,13 +12,13 @@ import demo.img.model.Image
 import demo.img.url.UriWrapper
 
 internal class ListViewModel(
-    getImages: ImagesProvider
+    getImages: ImagesProvider,
 ) : ViewModel() {
 
     private val refresh = MutableLiveData(Unit)
 
     val state = refresh.switchMap {
-        liveData<Result<List<Image>>?> {
+        liveData {
             emit(null)
             emit(
                 runCatching {
@@ -33,7 +33,7 @@ internal class ListViewModel(
             author = author,
             thumbnail = thumbnail.uri,
             detail = detail.uri,
-            web = web.uri
+            web = web.uri,
         )
 
     private val Url.uri

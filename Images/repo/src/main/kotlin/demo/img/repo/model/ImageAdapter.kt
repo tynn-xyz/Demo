@@ -6,7 +6,7 @@ import demo.img.core.UrlParser
 import demo.img.repo.LoremImage
 
 internal class ImageAdapter(
-    private val parseUrl: UrlParser
+    private val parseUrl: UrlParser,
 ) {
 
     @ToJson
@@ -19,7 +19,7 @@ internal class ImageAdapter(
         author = author,
         web = parseUrl(url),
         detail = parseUrl(downloadUrl()),
-        thumbnail = parseUrl(downloadUrl(512F, 512F))
+        thumbnail = parseUrl(downloadUrl(512F, 512F)),
     )
 
     private fun ImageDto.downloadUrl(): String {
@@ -31,9 +31,9 @@ internal class ImageAdapter(
 
     private fun ImageDto.downloadUrl(
         width: Float,
-        height: Float
+        height: Float,
     ) = download_url.replace(
         "/${this.width}/${this.height}",
-        "/${width.toInt()}/${height.toInt()}"
+        "/${width.toInt()}/${height.toInt()}",
     )
 }
