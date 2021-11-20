@@ -1,0 +1,58 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    defaultConfig {
+        versionCode 1
+        versionName "0.0"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '+debug'
+        }
+
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+        }
+    }
+
+    productFlavors {
+        realm
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    sourceSets {
+        androidTestMemory
+    }
+
+    variantFilter {
+        setIgnore "realm" in flavors*.name &&
+                !project.hasProperty('realmAppId')
+    }
+}
+
+dependencies {
+    implementation project(':data')
+
+    implementation 'androidx.core:core-ktx'
+
+    implementation 'androidx.appcompat:appcompat'
+    implementation 'com.google.android.material:material'
+    implementation 'androidx.constraintlayout:constraintlayout'
+
+    implementation 'androidx.navigation:navigation-fragment-ktx'
+    implementation 'androidx.navigation:navigation-ui-ktx'
+
+    implementation 'xyz.tynn.hoppa:binding'
+    implementation 'xyz.tynn.hoppa:delegate'
+    implementation 'xyz.tynn.hoppa:flow'
+}

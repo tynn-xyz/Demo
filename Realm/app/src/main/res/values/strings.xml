@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Realm Demo</string>
+
+    <string name="action_cancel">Cancel</string>
+    <string name="action_item_add">Add</string>
+    <string name="action_item_delete">Delete</string>
+    <string name="action_item_update">Update</string>
+    <string name="action_login">Login</string>
+    <string name="action_logout">Logout</string>
+
+    <string name="hint_item_add">Add item</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_username">Username</string>
+
+    <string name="message_error">Oops! Something went wrong.</string>
+</resources>

@@ -1,0 +1,26 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+    }
+
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.namespace == 'org.jetbrains.kotlin')
+                useVersion '1.6.0'
+            if (requested.id.namespace == 'com.android')
+                useModule 'com.android.tools.build:gradle:7.0.3'
+        }
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+include 'app', 'data', 'test'
+includeBuild 'realm'

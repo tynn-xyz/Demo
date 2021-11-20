@@ -1,0 +1,25 @@
+plugins {
+    id 'com.android.test'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+
+    targetProjectPath ':app'
+
+    buildTypes {
+        release {
+            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt')
+        }
+    }
+}
+
+dependencies {
+    compileOnly 'androidx.appcompat:appcompat'
+
+    implementation 'junit:junit'
+    implementation 'androidx.test:rules'
+    implementation 'androidx.test.ext:junit-ktx'
+    implementation 'androidx.test.espresso:espresso-core'
+}

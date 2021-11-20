@@ -1,0 +1,31 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/listFragment">
+    <action
+        android:id="@+id/showItemDialog"
+        app:destination="@id/itemDialogFragment" />
+    <action
+        android:id="@+id/showLoginDialog"
+        app:destination="@id/loginDialogFragment" />
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="demo.realm.app.list.ListFragment" />
+    <dialog
+        android:id="@+id/itemDialogFragment"
+        android:name="demo.realm.app.item.ItemDialogFragment"
+        android:label="ItemDialogFragment">
+        <argument
+            android:name="itemId"
+            app:argType="java.util.UUID"
+            app:nullable="true" />
+        <argument
+            android:name="value"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+    </dialog>
+    <dialog
+        android:id="@+id/loginDialogFragment"
+        android:name="demo.realm.app.login.LoginDialogFragment" />
+</navigation>

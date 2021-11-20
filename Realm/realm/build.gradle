@@ -1,0 +1,22 @@
+plugins {
+    id 'java-gradle-plugin'
+}
+
+version = '10.8.1'
+
+gradlePlugin {
+    plugins {
+        realm {
+            id = 'io.realm.android'
+            implementationClass = 'io.realm.gradle.Realm'
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api "io.realm:realm-gradle-plugin:$version"
+}

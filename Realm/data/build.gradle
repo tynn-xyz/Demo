@@ -1,0 +1,32 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.kapt'
+    id 'io.realm.android'
+}
+
+android {
+    productFlavors {
+        realm {
+            buildConfigField 'String', 'REALM_APP_ID', "\"${project.findProperty('realmAppId')}\""
+        }
+    }
+}
+
+realm {
+    syncEnabled true
+}
+
+dependencies {
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core'
+
+    implementation 'androidx.startup:startup-runtime'
+
+    // move realm from api to implementation
+    configurations.api.dependencies.with {
+        matching { it.group == 'io.realm' }.all {
+            remove it
+            implementation it
+        }
+    }
+}
