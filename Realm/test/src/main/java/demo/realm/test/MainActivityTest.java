@@ -13,7 +13,6 @@ import static demo.realm.app.R.string.action_item_add;
 import static demo.realm.app.R.string.action_item_delete;
 import static demo.realm.app.R.string.action_item_update;
 import static demo.realm.app.R.string.action_login;
-import static demo.realm.test.idling.ViewActions.clickAndDismiss;
 
 import android.view.View;
 
@@ -44,7 +43,7 @@ public class MainActivityTest {
         onView(withId(id.item_value))
                 .perform(replaceText("Value"));
         onView(withButton(android.R.id.button1, action_item_add))
-                .perform(clickAndDismiss());
+                .perform(click());
 
         // update item
         onView(withText("Value"))
@@ -52,13 +51,13 @@ public class MainActivityTest {
         onView(withId(id.item_value))
                 .perform(typeText(" update "));
         onView(withButton(android.R.id.button1, action_item_update))
-                .perform(clickAndDismiss());
+                .perform(click());
 
         // delete item
         onView(withText("Value update"))
                 .perform(click());
         onView(withButton(android.R.id.button2, action_item_delete))
-                .perform(clickAndDismiss());
+                .perform(click());
 
         logoutUser();
     }
@@ -71,7 +70,7 @@ public class MainActivityTest {
         onView(withId(id.action_item_add))
                 .perform(click());
         onView(withButton(android.R.id.button3, action_cancel))
-                .perform(clickAndDismiss());
+                .perform(click());
 
         logoutUser();
     }
@@ -86,13 +85,13 @@ public class MainActivityTest {
         onView(withId(id.item_value))
                 .perform(replaceText("Value"));
         onView(withButton(android.R.id.button1, action_item_add))
-                .perform(clickAndDismiss());
+                .perform(click());
 
         // update item
         onView(withText("Value"))
                 .perform(click());
         onView(withButton(android.R.id.button3, action_cancel))
-                .perform(clickAndDismiss());
+                .perform(click());
 
         logoutUser();
     }
@@ -104,7 +103,7 @@ public class MainActivityTest {
         onView(withId(id.action_login))
                 .perform(click());
         onView(withButton(android.R.id.button3, action_cancel))
-                .perform(clickAndDismiss());
+                .perform(click());
 
         onView(withId(id.action_logout))
                 .check(doesNotExist());
@@ -120,7 +119,7 @@ public class MainActivityTest {
         onView(withId(id.login_password))
                 .perform(replaceText(password));
         onView(withButton(android.R.id.button1, action_login))
-                .perform(clickAndDismiss());
+                .perform(click());
     }
 
     private void maybeLogoutUser() {

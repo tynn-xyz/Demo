@@ -10,7 +10,7 @@ import kotlin.test.Test
 
 internal class TimerDurationTest {
 
-    val context = mockk<Context>(relaxed = true)
+    private val context = mockk<Context>(relaxed = true)
 
     @Test
     fun `invoke should format seconds`() {

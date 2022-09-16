@@ -4,10 +4,11 @@ plugins {
 }
 
 android {
+    namespace 'demo.realm.app'
+
     defaultConfig {
         versionCode 1
         versionName "0.0"
-        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 
     buildTypes {
@@ -30,12 +31,8 @@ android {
         viewBinding true
     }
 
-    sourceSets {
-        androidTestMemory
-    }
-
     variantFilter {
-        setIgnore "realm" in flavors*.name &&
+        setIgnore 'realm' in flavors*.name &&
                 !project.hasProperty('realmAppId')
     }
 }

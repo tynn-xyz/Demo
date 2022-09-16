@@ -12,12 +12,12 @@ import kotlin.test.assertEquals
 
 internal class TimerDurationFactoryTest {
 
-    val clock = fixed(now() + ofHours(1), systemDefault())
-    val factory = TimerDuration.Factory(clock)
+    private val clock = fixed(now() + ofHours(1), systemDefault())
+    private val factory = TimerDuration.Factory(clock)
 
-    val paused = paused(now() - ofMinutes(2), now(), ofMinutes(1))
-    val started = started(now(), ofMinutes(3))
-    val stopped = stopped()
+    private val paused = paused(now() - ofMinutes(2), now(), ofMinutes(1))
+    private val started = started(now(), ofMinutes(3))
+    private val stopped = stopped()
 
     @Test
     fun `invoke should create duration from paused`() {

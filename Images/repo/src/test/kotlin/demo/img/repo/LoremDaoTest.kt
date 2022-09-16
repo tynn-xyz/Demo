@@ -9,7 +9,7 @@ import org.junit.Test
 
 internal class LoremDaoTest {
 
-    val images = listOf(
+    private val images = listOf(
         LoremImage(
             "1",
             mockk(),
@@ -24,11 +24,11 @@ internal class LoremDaoTest {
         )
     )
 
-    val service = mockk<LoremService> {
+    private val service = mockk<LoremService> {
         coEvery { getImages(any()) } returns images
     }
 
-    val dao = LoremDao(service)
+    private val dao = LoremDao(service)
 
     @Test
     fun `invoke page should map images`() = runBlocking {

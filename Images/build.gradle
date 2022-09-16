@@ -1,16 +1,30 @@
 plugins {
-    id 'androidx.navigation.safeargs.kotlin' version '2.3.5' apply false
-    id 'org.jetbrains.kotlin.android' version '1.5.20' apply false
-    id 'com.android.application' version '4.2.2' apply false
-    id 'com.github.ben-manes.versions' version '0.39.0'
-    id 'xyz.tynn.idea.fix' version '0.1.2'
+    id 'com.github.ben-manes.versions' version '0.42.0'
+    id 'com.android.application' version '7.3.0' apply false
+    id 'org.jetbrains.kotlin.android' version '1.7.10' apply false
+    id 'androidx.navigation.safeargs.kotlin' version '2.5.2' apply false
 }
 
 subprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven { url 'https://jitpack.io' }
+    plugins.withType(com.android.build.gradle.BasePlugin) {
+        android {
+            compileSdk 33
+
+            defaultConfig {
+                minSdk 21
+                targetSdk 33
+
+                testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+            }
+
+            buildFeatures {
+                buildConfig false
+            }
+        }
+
+        configurations.all {
+            exclude group: 'com.android.support'
+        }
     }
 
     tasks.withType(Test) {
@@ -20,48 +34,6 @@ subprojects {
             showExceptions true
             showStackTraces true
             showCauses true
-        }
-    }
-
-    plugins.withId('kotlin') {
-        compileKotlin {
-            kotlinOptions {
-                jvmTarget = '1.8'
-            }
-        }
-
-        compileTestKotlin {
-            kotlinOptions {
-                jvmTarget = '1.8'
-            }
-        }
-    }
-
-    plugins.withType(com.android.build.gradle.BasePlugin) {
-        project.apply plugin: 'kotlin-android'
-
-        android {
-            compileSdkVersion 30
-
-            defaultConfig {
-                minSdkVersion 21
-                targetSdkVersion 30
-
-                testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-            }
-
-            compileOptions {
-                sourceCompatibility '1.8'
-                targetCompatibility '1.8'
-            }
-
-            kotlinOptions {
-                jvmTarget = '1.8'
-            }
-        }
-
-        configurations.all {
-            exclude group: 'com.android.support'
         }
     }
 }
@@ -83,6 +55,6 @@ dependencyUpdates {
 }
 
 wrapper {
-    gradleVersion '7.1'
+    gradleVersion '7.5.1'
     distributionType Wrapper.DistributionType.ALL
 }

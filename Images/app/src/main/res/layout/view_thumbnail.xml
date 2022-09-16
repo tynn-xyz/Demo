@@ -1,4 +1,4 @@
-<demo.img.view.SquareFrameLayout
+<demo.img.app.widget.SquareFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,4 +20,4 @@
         android:padding="4dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
         tools:text="Author" />
-</demo.img.view.SquareFrameLayout>
+</demo.img.app.widget.SquareFrameLayout>

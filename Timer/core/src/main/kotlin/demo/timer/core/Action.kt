@@ -3,11 +3,7 @@ package demo.timer.core
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-//interface Action : suspend () -> Unit
-
-interface Action {
-    suspend operator fun invoke()
-}
+typealias Action = @JvmSuppressWildcards(false) suspend () -> Unit
 
 fun Action.launchIn(
     scope: CoroutineScope,

@@ -9,6 +9,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verifyAll
 import java.time.Duration.ofMinutes
+import java.time.Instant
 import java.time.Instant.now
 import java.time.Instant.ofEpochMilli
 import kotlin.test.Test
@@ -16,14 +17,14 @@ import kotlin.test.assertEquals
 
 internal class TimerPropertyTest {
 
-    val prefs = mockk<SharedPreferences>(relaxed = true) {
+    private val prefs = mockk<SharedPreferences>(relaxed = true) {
         every { contains(any()) } returns true
     }
-    var property by TimerProperty(prefs)
+    private var property by TimerProperty(prefs)
 
-    val paused = paused(nowMilli() - ofMinutes(1), nowMilli(), ofMinutes(1))
-    val started = started(nowMilli(), ofMinutes(2))
-    val stopped = stopped()
+    private val paused = paused(nowMilli() - ofMinutes(1), nowMilli(), ofMinutes(1))
+    private val started = started(nowMilli(), ofMinutes(2))
+    private val stopped = stopped()
 
     private val startedAtKey = "timer.started.at"
     private val pausedForKey = "timer.paused.for"
@@ -110,5 +111,5 @@ internal class TimerPropertyTest {
         assertEquals(stopped, property)
     }
 
-    fun nowMilli() = ofEpochMilli(now().toEpochMilli())
+    private fun nowMilli(): Instant = ofEpochMilli(now().toEpochMilli())
 }

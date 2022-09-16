@@ -13,7 +13,7 @@ import java.lang.System.setProperty
 
 @RunWith(RobolectricTestRunner::class)
 @Config(application = ImagesApp::class)
-class ImagesAppTest : KoinTest {
+internal class ImagesAppTest : KoinTest {
 
     @Before
     fun setup() {

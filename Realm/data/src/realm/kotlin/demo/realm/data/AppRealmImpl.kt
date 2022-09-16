@@ -14,14 +14,11 @@ import demo.realm.data.utils.useMapLatest
 import io.realm.mongodb.App
 import io.realm.mongodb.Credentials.customFunction
 import io.realm.mongodb.User
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.*
 import kotlinx.coroutines.android.asCoroutineDispatcher
 import kotlinx.coroutines.channels.BufferOverflow.DROP_OLDEST
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
-import kotlinx.coroutines.withContext
 
 internal abstract class AppRealmImpl(name: String) {
 
@@ -85,6 +82,7 @@ internal abstract class AppRealmImpl(name: String) {
     protected val currentUser: User?
         get() = app.currentUser()
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     protected fun realmFlow(
         partitionValue: User.() -> String?,
     ) = app.currentUserFlow().useMapLatest {

@@ -8,9 +8,9 @@ import kotlin.test.Test
 
 internal class StartTimerActionTest {
 
-    val state = mockk<TimerStore>(relaxed = true)
+    private val state = mockk<TimerStore>(relaxed = true)
 
-    val action = StartTimerAction(state)
+    private val action = StartTimerAction(state)
 
     @Test
     fun `action should delegate to state start`() {
@@ -19,4 +19,3 @@ internal class StartTimerActionTest {
         coVerifyAll { state.startTimer() }
     }
 }
-

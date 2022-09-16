@@ -1,12 +1,9 @@
 package demo.realm.app.list
 
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.Dimension
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import demo.realm.app.R.dimen.default_margin
 import demo.realm.app.R.layout.fragment_list
 import demo.realm.app.databinding.FragmentListBinding

@@ -6,6 +6,7 @@ import io.realm.Realm
 import io.realm.kotlin.executeTransactionAwait
 import io.realm.kotlin.toFlow
 import io.realm.kotlin.where
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 
 internal object UserRealmImpl : UserRealm, AppRealmImpl("realm") {
@@ -14,6 +15,7 @@ internal object UserRealmImpl : UserRealm, AppRealmImpl("realm") {
         realmFlow { id }.share()
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override val items by lazy {
         userRealm.flatMapLatest {
             it?.items ?: flowOf(emptyList())

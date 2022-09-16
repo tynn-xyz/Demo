@@ -1,8 +1,8 @@
 package demo.img.app
 
 import android.app.Application
+import demo.img.app.ui.uiModule
 import demo.img.repo.repoModule
-import demo.img.ui.uiModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 

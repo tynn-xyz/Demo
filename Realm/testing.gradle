@@ -1,0 +1,6 @@
+dependencies {
+    testImplementation 'junit:junit'
+    testImplementation 'io.mockk:mockk'
+    testImplementation 'org.jetbrains.kotlin:kotlin-test-junit'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test'
+}

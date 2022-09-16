@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/list_screen"
-        android:name="demo.img.ui.list.ListFragment"
+        android:name="demo.img.app.ui.list.ListFragment"
         android:label="@string/label_screen_list">
         <action
             android:id="@+id/show_detail_screen"
@@ -16,10 +16,10 @@
 
     <fragment
         android:id="@+id/detail_screen"
-        android:name="demo.img.ui.detail.DetailFragment"
+        android:name="demo.img.app.ui.detail.DetailFragment"
         android:label="@string/label_screen_detail">
         <argument
             android:name="image"
-            app:argType="demo.img.model.Image" />
+            app:argType="demo.img.app.model.Image" />
     </fragment>
 </navigation>

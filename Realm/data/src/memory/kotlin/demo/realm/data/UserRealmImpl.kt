@@ -2,6 +2,7 @@ package demo.realm.data
 
 import demo.realm.data.model.Credentials
 import demo.realm.data.model.Item
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -19,9 +20,10 @@ internal object UserRealmImpl : UserRealm {
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override val items = AppRealmImpl.credentials.flatMapLatest {
         it?.getUserItems()?.map { items ->
-            items.values.toList<Item>()
+            items.values.toList()
         } ?: flowOf(emptyList())
     }.distinctUntilChanged()
 

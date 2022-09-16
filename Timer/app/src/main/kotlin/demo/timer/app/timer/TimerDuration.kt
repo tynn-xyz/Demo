@@ -3,6 +3,7 @@ package demo.timer.app.timer
 import android.content.Context
 import demo.timer.app.R.string.*
 import demo.timer.core.Timer
+import kotlinx.parcelize.Parcelize
 import xyz.tynn.astring.AString
 import java.time.Clock
 import java.time.Duration
@@ -11,6 +12,7 @@ import java.time.Duration.between
 import java.time.Instant.now
 import javax.inject.Inject
 
+@Parcelize
 data class TimerDuration internal constructor(
     val duration: Duration,
     val isStarted: Boolean,

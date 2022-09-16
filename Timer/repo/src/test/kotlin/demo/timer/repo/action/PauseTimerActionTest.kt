@@ -8,9 +8,9 @@ import kotlin.test.Test
 
 internal class PauseTimerActionTest {
 
-    val state = mockk<TimerStore>(relaxed = true)
+    private val state = mockk<TimerStore>(relaxed = true)
 
-    val action = PauseTimerAction(state)
+    private val action = PauseTimerAction(state)
 
     @Test
     fun `action should delegate to state pause`() {

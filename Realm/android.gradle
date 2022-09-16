@@ -1,0 +1,30 @@
+android {
+    compileSdk 33
+
+    defaultConfig {
+        minSdk 26
+        targetSdk 33
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    buildFeatures {
+        buildConfig false
+    }
+
+    flavorDimensions 'backend'
+
+    productFlavors {
+        memory
+    }
+}
+
+dependencies {
+    implementation platform(rootProject)
+}

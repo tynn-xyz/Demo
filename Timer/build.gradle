@@ -1,26 +1,14 @@
 plugins {
-    id 'com.android.application' version '4.2.1' apply false
-    id 'dagger.hilt.android.plugin' version '2.37' apply false
-    id 'org.jetbrains.kotlin.android' version '1.5.10' apply false
-    id 'com.github.ben-manes.versions' version '0.39.0'
-    id 'xyz.tynn.idea.fix' version '0.1.2'
+    id 'com.android.application' version '7.3.0' apply false
+    id 'dagger.hilt.android.plugin' version '2.43.2' apply false
+    id 'org.jetbrains.kotlin.android' version '1.7.10' apply false
+    id 'com.github.ben-manes.versions' version '0.42.0'
 }
 
 subprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
     pluginManager.withPlugin('com.android.application') {
+        apply plugin: 'org.jetbrains.kotlin.android'
         apply from: "$rootDir/android.gradle"
-    }
-
-    pluginManager.withPlugin('com.android.library') {
-        apply from: "$rootDir/android.gradle"
-    }
-
-    pluginManager.withPlugin('org.jetbrains.kotlin.android') {
         apply from: "$rootDir/kotlin.gradle"
     }
 
@@ -46,6 +34,6 @@ dependencyUpdates {
 }
 
 wrapper {
-    gradleVersion '7.1'
+    gradleVersion '7.5.1'
     distributionType Wrapper.DistributionType.ALL
 }

@@ -2,7 +2,7 @@ plugins {
     id 'java-gradle-plugin'
 }
 
-version = '10.8.1'
+version = '10.11.1'
 
 gradlePlugin {
     plugins {

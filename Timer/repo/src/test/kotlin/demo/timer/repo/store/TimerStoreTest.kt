@@ -19,14 +19,14 @@ import kotlin.test.assertEquals
 
 internal class TimerStoreTest {
 
-    val clock = fixed(now() + ofHours(1), systemDefault())
-    val property = mockk<Property<Timer>>(relaxed = true)
+    private val clock = fixed(now() + ofHours(1), systemDefault())
+    private val property = mockk<Property<Timer>>(relaxed = true)
 
-    val state by lazy { TimerStore(property, clock) }
+    private val state by lazy { TimerStore(property, clock) }
 
-    val paused = paused(now() - ofMinutes(1), now(), ofMinutes(1))
-    val started = started(now(), ofMinutes(2))
-    val stopped = stopped()
+    private val paused = paused(now() - ofMinutes(1), now(), ofMinutes(1))
+    private val started = started(now(), ofMinutes(2))
+    private val stopped = stopped()
 
     @Test
     fun `flow should init with property`() {
@@ -128,14 +128,14 @@ internal class TimerStoreTest {
         assertAndVerifyTimer(stopped)
     }
 
-    fun assertTimer(
+    private fun assertTimer(
         expected: Timer,
     ) = assertEquals(
         expected,
         runBlocking { state.flow.first() },
     )
 
-    fun assertAndVerifyTimer(expected: Timer) {
+    private fun assertAndVerifyTimer(expected: Timer) {
         assertTimer(expected)
         verify { property.setValue(state, any(), expected) }
     }

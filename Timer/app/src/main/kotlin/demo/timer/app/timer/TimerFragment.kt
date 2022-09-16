@@ -10,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import demo.timer.app.R.layout.fragment_timer
 import demo.timer.app.databinding.FragmentTimerBinding.bind
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import xyz.tynn.astring.core.setText
 

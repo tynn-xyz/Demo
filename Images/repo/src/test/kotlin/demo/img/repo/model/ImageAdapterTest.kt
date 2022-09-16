@@ -8,7 +8,7 @@ import org.junit.Test
 
 internal class ImageAdapterTest {
 
-    val adapter = ImageAdapter(StringUrl)
+    private val adapter = ImageAdapter(StringUrl)
 
     @Test
     fun `toData should convert ImageDto to LoremImageData`() {

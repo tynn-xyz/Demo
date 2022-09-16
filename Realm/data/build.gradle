@@ -6,6 +6,12 @@ plugins {
 }
 
 android {
+    namespace 'demo.realm.data'
+
+    buildFeatures {
+        buildConfig true
+    }
+
     productFlavors {
         realm {
             buildConfigField 'String', 'REALM_APP_ID', "\"${project.findProperty('realmAppId')}\""
@@ -20,7 +26,7 @@ realm {
 dependencies {
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-core'
 
-    implementation 'androidx.startup:startup-runtime'
+    realmImplementation 'androidx.startup:startup-runtime'
 
     // move realm from api to implementation
     configurations.api.dependencies.with {
